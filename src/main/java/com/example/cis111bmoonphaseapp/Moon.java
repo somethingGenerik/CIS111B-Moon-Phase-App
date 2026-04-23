@@ -1,3 +1,5 @@
+package com.example.cis111bmoonphaseapp;
+
 public class Moon {
 
     public String phase_name;
