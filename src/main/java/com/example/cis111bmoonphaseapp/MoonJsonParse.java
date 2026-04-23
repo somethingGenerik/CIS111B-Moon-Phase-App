@@ -7,7 +7,7 @@ public class MoonJsonParse {
 
     public static void main(String[] args) {
 
-        //ApiInput input = new APIinput();
+        //com.example.cis111bmoonphaseapp.ApiInput input = new APIinput();
         //String url = "https://moon-phase.p.rapidapi.com/advanced" + "?lat=" + input.getLatitude() + "&lon=" + input.getLongitude() + "&timestamp=" + Instant.now().getEpochSeconds();
 
         String data = """

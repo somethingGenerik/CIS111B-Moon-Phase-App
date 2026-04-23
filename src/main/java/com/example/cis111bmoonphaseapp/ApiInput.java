@@ -1,3 +1,5 @@
+package com.example.cis111bmoonphaseapp;
+
 public class ApiInput{
 
     private final double lat = 40.1523;

@@ -9,6 +9,6 @@ module com.example.cis111bmoonphaseapp {
 
     opens com.example.cis111bmoonphaseapp to javafx.fxml;
     exports com.example.cis111bmoonphaseapp;
-    exports;
-    opens to
+    //exports;
+    //opens to
 }
