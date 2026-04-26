@@ -30,21 +30,27 @@ public class MoonJsonParse {
                 .GET()
                 .build();
 
-
+        //HTTP response needs try catch according to IntelliJ
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             //System.out.println(response.body());
 
+            //new gson object to parse json
             Gson gson = new Gson();
+            //parsing and matching data to MoonPhase object
             MoonPhase moonphase = gson.fromJson(response.body(), MoonPhase.class);
 
+            //prints moon pase rigt now
             System.out.println(moonphase.moon.phase_name);
+            //prints timestamp of rise
             System.out.println(moonphase.moon.moonrise_timestamp);
+            //prints timestamp of set
             System.out.println(moonphase.moon.moonset_timestamp);
 
 
         } catch (Exception e) {
+            //message that prints if anything fails
             System.out.println("Failed Parsing");
         }
     }
