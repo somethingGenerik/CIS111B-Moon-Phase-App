@@ -1,7 +1,5 @@
 package com.example.cis111bmoonphaseapp;
-
 import com.google.gson.Gson;
-
 import java.time.Instant;
 import java.net.URI;
 import java.net.http.HttpClient;
