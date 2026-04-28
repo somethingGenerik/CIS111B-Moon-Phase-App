@@ -1,59 +1,59 @@
-package com.example.cis111bmoonphaseapp;
-import com.google.gson.Gson;
-import java.time.Instant;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
-public class MoonJsonParse {
-
-    public static void main(String[] args) {
-
-        //creates instance of ApiInput class which holds coordinates for blue bell and the time stamp used in URI
-        com.example.cis111bmoonphaseapp.ApiInput input = new ApiInput();
-        //variable to old request url
-        String url = "https://moon-phase.p.rapidapi.com/advanced" + "?lat=" + input.getLatitude() + "&lon=" + input.getLongitude() + "&timestamp=" + Instant.now().getEpochSecond();
-        //variable that holds the environmental variable API_KEY
-        String apiKey = System.getenv("API_KEY");
-
-        //new http client to handle request
-        HttpClient client = HttpClient.newHttpClient();
-
-        //new URI request
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("accept", "application/json")
-                .header("x-rapidapi-key", apiKey)
-                .GET()
-                .build();
-
-        //HTTP response needs try catch according to IntelliJ
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            //System.out.println(response.body());
-
-            //new gson object to parse json
-            Gson gson = new Gson();
-            //parsing and matching data to MoonPhase object
-            MoonPhase moonphase = gson.fromJson(response.body(), MoonPhase.class);
-
-            //prints moon pase rigt now
-            System.out.println(moonphase.moon.phase_name);
-            //prints timestamp of rise
-            System.out.println(moonphase.moon.moonrise_timestamp);
-            //prints timestamp of set
-            System.out.println(moonphase.moon.moonset_timestamp);
-
-
-        } catch (Exception e) {
-            //message that prints if anything fails
-            System.out.println("Failed Parsing");
-        }
-    }
-
-}
+//package com.example.cis111bmoonphaseapp;
+//import com.google.gson.Gson;
+//import java.time.Instant;
+//import java.net.URI;
+//import java.net.http.HttpClient;
+//import java.net.http.HttpRequest;
+//import java.net.http.HttpResponse;
+//
+//public class MoonJsonParse {
+//
+//    protected void updateMoonPhaseData {
+//
+//        //creates instance of ApiInput class which holds coordinates for blue bell and the time stamp used in URI
+//        com.example.cis111bmoonphaseapp.ApiInput input = new ApiInput();
+//        //variable to old request url
+//        String url = "https://moon-phase.p.rapidapi.com/advanced" + "?lat=" + input.getLatitude() + "&lon=" + input.getLongitude() + "&timestamp=" + Instant.now().getEpochSecond();
+//        //variable that holds the environmental variable API_KEY
+//        String apiKey = System.getenv("API_KEY");
+//
+//        //new http client to handle request
+//        HttpClient client = HttpClient.newHttpClient();
+//
+//        //new URI request
+//        HttpRequest request = HttpRequest.newBuilder()
+//                .uri(URI.create(url))
+//                .header("accept", "application/json")
+//                .header("x-rapidapi-key", apiKey)
+//                .GET()
+//                .build();
+//
+//        //HTTP response needs try catch according to IntelliJ
+//        try {
+//            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//            //System.out.println(response.body());
+//
+//            //new gson object to parse json
+//            Gson gson = new Gson();
+//            //parsing and matching data to MoonPhase object
+//            MoonPhase moonphase = gson.fromJson(response.body(), MoonPhase.class);
+//
+//            //prints moon pase rigt now
+//            System.out.println(moonphase.moon.phase_name);
+//            //prints timestamp of rise
+//            System.out.println(moonphase.moon.moonrise_timestamp);
+//            //prints timestamp of set
+//            System.out.println(moonphase.moon.moonset_timestamp);
+//
+//
+//        } catch (Exception e) {
+//            //message that prints if anything fails
+//            System.out.println("Failed Parsing");
+//        }
+//    }
+//
+//}
 
 //        String data = """
 //            {

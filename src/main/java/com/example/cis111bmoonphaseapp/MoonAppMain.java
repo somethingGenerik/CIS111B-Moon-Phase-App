@@ -1,3 +1,12 @@
+/**
+ *  Programmer(s):       [Jack Durand, Ahmed Ahmed, Taylor Hollaway]
+ *
+ *  Program Name:        [MoonAppMain.Java]
+ *
+ *  Date Written:        [4/29/2026]
+ *
+ */
+
 package com.example.cis111bmoonphaseapp;
 
 import javafx.application.Application;
@@ -21,6 +30,7 @@ public class MoonAppMain extends Application
         // Load the GUI from FXML built in Scene Builder
         Parent root = FXMLLoader.load(getClass().getResource("MoonFMXL.fxml"));
         Scene scene = new Scene(root);
+        stage.setTitle("LunarPhase Lite");
         // The stylesheet is currently set in Scene Builder
         // Note you can also load this programmatically
         // scene.getStylesheets().add("styles.css");
