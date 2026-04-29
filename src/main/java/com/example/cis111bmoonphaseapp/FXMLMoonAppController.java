@@ -96,33 +96,22 @@ public class FXMLMoonAppController implements Initializable {
         updateMoonPhaseData();
     }
 
-    protected void updateUI(){
+    protected void updateUI() {
+        // phase_name is a String, not an int
+        MoonPhaseName.setText(currentPhase.moon.phase_name);
 
-        MoonPhaseName.setText(String.format("%d\u00B0",this.currentPhase.moon.phase_name));
-        RiseTime.setText(String.format("%d\u00B0",this.currentPhase.moon.moonrise_timestamp));
-        SetTime.setText(String.format("%d\u00B0",this.currentPhase.moon.moonset_timestamp));
+        Date today = new Date();
+        SimpleDateFormat dateFmt = new SimpleDateFormat("MM/dd/yyyy");
+        Date.setText(dateFmt.format(today));
 
-        SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yy hh:mm a");
-        SetTime.setText(fmt.format(this.updateTime));
+        // Convert Unix timestamps to readable time
+        SimpleDateFormat fmt = new SimpleDateFormat("hh:mm a");
 
-    }
+        Date riseDate = new Date(currentPhase.moon.moonrise_timestamp * 1000L);
+        Date setDate  = new Date(currentPhase.moon.moonset_timestamp * 1000L);
 
-    protected void processMoonData(String data) {
-        this.updateTime = new Date();
-
-        System.out.println(data);
-
-        Gson gson = new Gson();
-        try {
-            this.currentPhase = gson.fromJson(data, MoonPhase.class);
-        }catch(Exception e){
-            System.out.println("GSON Parsing Failed");
-            return;
-        }
-        Platform.runLater( new Runnable() {
-                            public void run() { updateUI(); }
-
-        } );
+        RiseTime.setText("Rise: " + fmt.format(riseDate));
+        SetTime.setText("Set: "  + fmt.format(setDate));
     }
 
     protected void updateMoonPhaseData(){
@@ -154,20 +143,21 @@ public class FXMLMoonAppController implements Initializable {
             //new gson object to parse json
             Gson gson = new Gson();
             //parsing and matching data to MoonPhase object
-            MoonPhase moonphase = gson.fromJson(response.body(), MoonPhase.class);
+            this.currentPhase = gson.fromJson(response.body(), MoonPhase.class);
+            this.updateTime = new Date();
+            Platform.runLater(this::updateUI);
 
-            //prints moon pase right now
-            System.out.println(moonphase.moon.phase_name);
-            //prints timestamp of rise
-            System.out.println(moonphase.moon.moonrise_timestamp);
-            //prints timestamp of set
-            System.out.println(moonphase.moon.moonset_timestamp);
+            System.out.println(this.currentPhase.moon.phase_name);
+            System.out.println(this.currentPhase.moon.moonrise_timestamp);
+            System.out.println(this.currentPhase.moon.moonset_timestamp);
+
 
 
         } catch (Exception e) {
             //message that prints if anything fails
             System.out.println("Failed Parsing");
         }
+
     }
 
     protected void startCountdown() {
