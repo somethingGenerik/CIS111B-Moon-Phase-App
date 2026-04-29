@@ -68,17 +68,19 @@ public class FXMLMoonAppController implements Initializable {
     @FXML
     private Text Title;
 
-    private HttpClient client;
-
     private Phase phase;
 
-    private enum Phase {NEW_MOON, WAXING_CRESCENT,
-                                FIRST_QUARTER,
-                                WAXING_GIBBOUS,
-                                FULL_MOON,
-                                WANING_GIBBOUS,
-                                THIRD_QUARTER,
-                                WANING_CRESCENT};
+    private enum Phase {
+        NEW_MOON, WAXING_CRESCENT,
+        FIRST_QUARTER,
+        WAXING_GIBBOUS,
+        FULL_MOON,
+        WANING_GIBBOUS,
+        THIRD_QUARTER,
+        WANING_CRESCENT
+    }
+
+    ;
 
     private MoonPhase currentPhase;
 
@@ -108,13 +110,15 @@ public class FXMLMoonAppController implements Initializable {
         SimpleDateFormat fmt = new SimpleDateFormat("hh:mm a");
 
         Date riseDate = new Date(currentPhase.moon.moonrise_timestamp * 1000L);
-        Date setDate  = new Date(currentPhase.moon.moonset_timestamp * 1000L);
+        Date setDate = new Date(currentPhase.moon.moonset_timestamp * 1000L);
 
         RiseTime.setText("Rise: " + fmt.format(riseDate));
-        SetTime.setText("Set: "  + fmt.format(setDate));
+        SetTime.setText("Set: " + fmt.format(setDate));
+
+        setMoonImagebyPhase(currentPhase.moon.phase_name);
     }
 
-    protected void updateMoonPhaseData(){
+    protected void updateMoonPhaseData() {
 
         //creates instance of ApiInput class which holds coordinates for blue bell and the time stamp used in URI
         com.example.cis111bmoonphaseapp.ApiInput input = new ApiInput();
@@ -152,7 +156,6 @@ public class FXMLMoonAppController implements Initializable {
             System.out.println(this.currentPhase.moon.moonset_timestamp);
 
 
-
         } catch (Exception e) {
             //message that prints if anything fails
             System.out.println("Failed Parsing");
@@ -164,7 +167,7 @@ public class FXMLMoonAppController implements Initializable {
         countdownTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             if (secondsRemaining > 0) {
                 secondsRemaining--;
-                int hours   = secondsRemaining / 3600;
+                int hours = secondsRemaining / 3600;
                 int minutes = (secondsRemaining % 3600) / 60;
                 int seconds = secondsRemaining % 60;
                 TimeToUpdate.setText(String.format("Update in: %02d:%02d:%02d", hours, minutes, seconds));
@@ -176,6 +179,38 @@ public class FXMLMoonAppController implements Initializable {
         countdownTimer.setCycleCount(Timeline.INDEFINITE);
         countdownTimer.play();
     }
+
+    public void setMoonImagebyPhase(String phase) {
+        String imgphase = "";
+
+        if(phase.equals("New Moon")) {
+            imgphase = "/com/example/cis111bmoonphaseapp/phase1.png";
+        }
+        else if (phase.equals("Waxing crescent")) {
+            imgphase = "/com/example/cis111bmoonphaseapp/phase2.png";
+        }
+        else if (phase.equals("First quarter")) {
+            imgphase = "/com/example/cis111bmoonphaseapp/phase3.png";
+        }
+        else if(phase.equals("Waxing gibbous")) {
+            imgphase = "/com/example/cis111bmoonphaseapp/phase4.png";
+        }
+        else if(phase.equals("Full moon")) {
+            imgphase = "/com/example/cis111bmoonphaseapp/phase5.png";
+        }
+        else if (phase.equals("Waning gibbous"))
+        {
+            imgphase = "/com/example/cis111bmoonphaseapp/phase6.png";
+        }
+        else if (phase.equals("Third quarter")) {
+            imgphase = "/com/example/cis111bmoonphaseapp/phase7.png";
+        }
+        else if(phase.equals("Waning crescent")) {
+            imgphase = "/com/example/cis111bmoonphaseapp/phase8.png";
+        }
+
+        MoonImage.setImage(new Image(getClass().getResourceAsStream(imgphase)));
+        }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
