@@ -28,7 +28,12 @@
         </padding>
 
         <!-- API / top label -->
-        <Text fx:id="APITitle" styleClass="api-title" text="Moon Phases" />
+        <Text fx:id="APITitle" styleClass="api-title" text="Moon Phases">
+            <font>
+                <Font name="System" size="18.0" />
+            </font>
+            <style>-fx-fill: white; -fx-font-weight: bold;</style>
+        </Text>
 
         <!-- Main Title -->
         <Text fx:id="Title" text="Current Moon Phase" textAlignment="CENTER">
