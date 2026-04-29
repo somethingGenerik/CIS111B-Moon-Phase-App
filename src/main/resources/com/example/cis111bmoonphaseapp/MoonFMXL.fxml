@@ -17,7 +17,7 @@
         prefWidth="960.0"
         xmlns="http://javafx.com/javafx/17"
         xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="com.example.cis111bmoonphaseapp.FMXLMoonAppController">
+        fx:controller="com.example.cis111bmoonphaseapp.FXMLMoonAppController">
 
     <!-- Starry background image -->
     <ImageView fx:id="Background" fitHeight="560.0" fitWidth="960.0" preserveRatio="false" />
