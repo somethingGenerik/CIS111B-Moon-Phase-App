@@ -10,10 +10,13 @@
 package com.example.cis111bmoonphaseapp;
 
 import com.google.gson.Gson;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -21,6 +24,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import javafx.application.Platform;
+import javafx.util.Duration;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -80,18 +84,17 @@ public class FXMLMoonAppController implements Initializable {
 
     private Date updateTime;
 
+    private Timeline countdownTimer;
+    private int secondsRemaining = 900;
+
     public static final String MOON_PHASE = "moon_phase_key";
 
     @FXML
-    protected void handleRefreshButtonAction(ActionEvent event){ updateMoonPhaseData(); }
-
-    //was thinking we could use the enum like the temperature app does with celsius and fahrenheit.
-    // i'm sure we can cut this is need be -taylor
-//    @FXML
-//    protected void handlePhaseConversionButtonAction(ActionEvent event){
-//        if(event.getSource() == something?)
-//
-//    }
+    protected void handleRefreshButtonAction(ActionEvent event) {
+        secondsRemaining = 900; // reset countdown on manual refresh
+        RefreshButton.setDisable(true); // locks button after first refresh, forces to wait 15 min until next
+        updateMoonPhaseData();
+    }
 
     protected void updateUI(){
 
@@ -167,11 +170,33 @@ public class FXMLMoonAppController implements Initializable {
         }
     }
 
+    protected void startCountdown() {
+        countdownTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            if (secondsRemaining > 0) {
+                secondsRemaining--;
+                int hours   = secondsRemaining / 3600;
+                int minutes = (secondsRemaining % 3600) / 60;
+                int seconds = secondsRemaining % 60;
+                TimeToUpdate.setText(String.format("Update in: %02d:%02d:%02d", hours, minutes, seconds));
+            } else {
+                secondsRemaining = 900; // reset to 15 min
+                RefreshButton.setDisable(false); // unlocks button when timer is up
+            }
+        }));
+        countdownTimer.setCycleCount(Timeline.INDEFINITE);
+        countdownTimer.play();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Preferences p = Preferences.userNodeForPackage(FXMLMoonAppController.class);
         this.phase = Phase.valueOf( p.get(MOON_PHASE, Phase.WAXING_GIBBOUS.toString() ) );
 
+        Image img = new Image(getClass().getResourceAsStream("/com/example/cis111bmoonphaseapp/background.jpg"));
+        Background.setImage(img);
+
         updateMoonPhaseData();
+
+        startCountdown();
     }
 }

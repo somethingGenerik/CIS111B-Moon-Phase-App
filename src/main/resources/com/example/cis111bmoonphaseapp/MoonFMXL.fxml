@@ -94,7 +94,7 @@
                         </font>
                         <style>-fx-fill: white;</style>
                     </Text>
-                    <Button fx:id="RefreshButton" mnemonicParsing="false" text="Refresh">
+                    <Button fx:id="RefreshButton" mnemonicParsing="false" text="Refresh" onAction="#handleRefreshButtonAction">
                         <font>
                             <Font name="System" size="14.0" />
                         </font>
