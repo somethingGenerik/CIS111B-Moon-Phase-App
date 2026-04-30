@@ -17,7 +17,7 @@
         prefWidth="960.0"
         xmlns="http://javafx.com/javafx/17"
         xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="com.example.cis111bmoonphaseapp.FMXLMoonAppController">
+        fx:controller="com.example.cis111bmoonphaseapp.FXMLMoonAppController">
 
     <!-- Starry background image -->
     <ImageView fx:id="Background" fitHeight="560.0" fitWidth="960.0" preserveRatio="false" />
@@ -28,7 +28,12 @@
         </padding>
 
         <!-- API / top label -->
-        <Text fx:id="APITitle" styleClass="api-title" text="Moon Phases" />
+        <Text fx:id="APITitle" styleClass="api-title" text="Moon Phases">
+            <font>
+                <Font name="System" size="18.0" />
+            </font>
+            <style>-fx-fill: white; -fx-font-weight: bold;</style>
+        </Text>
 
         <!-- Main Title -->
         <Text fx:id="Title" text="Current Moon Phase" textAlignment="CENTER">
@@ -94,7 +99,7 @@
                         </font>
                         <style>-fx-fill: white;</style>
                     </Text>
-                    <Button fx:id="RefreshButton" mnemonicParsing="false" text="Refresh">
+                    <Button fx:id="RefreshButton" mnemonicParsing="false" text="Refresh" onAction="#handleRefreshButtonAction">
                         <font>
                             <Font name="System" size="14.0" />
                         </font>
